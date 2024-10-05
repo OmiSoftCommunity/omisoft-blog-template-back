@@ -16,17 +16,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    if (
-      req.originalUrl.includes("blog") ||
-      req.originalUrl.includes("login") ||
-      req.originalUrl.includes("register") ||
-      req.originalUrl.includes("one-time-link") ||
-      req.originalUrl.includes("reset-password") ||
-      req.originalUrl.includes("swagger")
-    ) {
-      return next();
-    }
-
     const parsedToken = req.headers.authorization?.split(" ")[1] ?? "";
     if (!parsedToken) {
       return ResponseService.error(res, TEXT.ERRORS.unauthorized, 401);

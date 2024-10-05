@@ -10,7 +10,7 @@ export const TEXT = {
     userExists: "User already exists",
     roleExists: "This role already exists",
     wrongCredentials: "Sorry, credentials are wrong",
-    wrongOldPassword: "Sorry, old password are wrong",
+    wrongOldPassword: "The old password is incorrect",
     incorrectPasswordFormat: "Incorrect password format",
     postExists: "Post with the same url already exists",
     postDoesntExists: "Post not found",

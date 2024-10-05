@@ -5,7 +5,6 @@ import swaggerDoc from "../../swagger.json";
 import routes from "../routes";
 import errorHandlerMiddleware from "../middleware/ErrorHandlerMiddleware";
 import corsMiddleware from "../middleware/CorsMiddleware";
-import authVerifyMiddleware from "../middleware/AuthVerifyMiddleware";
 import { API_ROUTES } from "../config/ApiRoutes";
 import { isDevEnv } from "../utils/EnvChecker";
 
@@ -14,7 +13,6 @@ export default function loadServer() {
 
   app.use(corsMiddleware);
   app.use(express.json());
-  // app.use(authVerifyMiddleware);
 
   if (isDevEnv()) {
     app.use(morgan("tiny"));
