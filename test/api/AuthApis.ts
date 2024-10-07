@@ -18,6 +18,15 @@ type ChangePasswordBody = {
   newPassword?: string;
 };
 
+type ResetPasswordBody = {
+  email?: string;
+};
+
+type FinishResetPasswordBody = {
+  token?: string;
+  newPassword?: string;
+};
+
 const registerWithEmail = async (body: UserBody | undefined) => {
   return await supertest(app).post("/auth/register").send(body);
 };
@@ -40,4 +49,12 @@ const changePassword = async (body: ChangePasswordBody | undefined, accessToken?
   return await request.send(body);
 };
 
-export { registerWithEmail, loginWithEmail, doRefreshToken, changePassword };
+const resetPassword = async (body: ResetPasswordBody | undefined) => {
+  return await supertest(app).post("/auth/reset-password").send(body);
+};
+
+const finishResetPassword = async (body: FinishResetPasswordBody | undefined) => {
+  return await supertest(app).post("/auth/finish-reset-password").send(body);
+};
+
+export { registerWithEmail, loginWithEmail, doRefreshToken, changePassword, resetPassword, finishResetPassword };

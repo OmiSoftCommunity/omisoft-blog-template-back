@@ -1,10 +1,14 @@
 import nodemailer from "nodemailer";
 import CONFIG from ".";
+import SMTPPool from "nodemailer/lib/smtp-pool";
+
+const pool = new SMTPPool();
+pool.options.maxConnections = Infinity;
 
 const transporter = nodemailer.createTransport(
   {
-    host: "smtp.ukr.net",
-    port: 465,
+    service: "gmail",
+    host: "smtp.gmail.com",
     secure: true,
     auth: {
       user: CONFIG.NODEMAILER_EMAIL,
@@ -15,8 +19,11 @@ const transporter = nodemailer.createTransport(
 );
 
 export const mailer = (message: Object) => {
-  transporter.sendMail(message, (err: Error | null) => {
-    if (err) return console.log(err);
-    console.log("Mail sent");
+  transporter.sendMail(message, (error: Error | null) => {
+    if (!error) {
+      console.log("Email sent successfully");
+    } else {
+      console.log("The email was not sent: " + error);
+    }
   });
 };

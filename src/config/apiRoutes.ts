@@ -7,6 +7,7 @@ export const API_ROUTES = {
     REFRESH_TOKEN: `${BASE_URL}auth/refresh/`,
     REGISTER_ADMIN: `${BASE_URL}auth/admin-register/`,
     RESET_PASSWORD: `${BASE_URL}auth/reset-password/`,
+    FINISH_RESET_PASSWORD: `${BASE_URL}auth/finish-reset-password/`,
     CHANGE_PASSWORD: `${BASE_URL}auth/change-password/`,
   },
   USERS: {

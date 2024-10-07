@@ -1,10 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { connectMockDatabase, disconnectMockDatabase } from "../utils/MockMongoLoader";
-import decodeAccessToken from "../utils/JwtTokenHelper";
 import { changePassword, loginWithEmail, registerWithEmail } from "../api/AuthApis";
 import { USER_EMAIL, USER_PASSWORD } from "../api/UserCredentials";
-import { getMyProfile } from "../api/UsersApis";
 
 /**
  * Change Password Tests
