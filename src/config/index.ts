@@ -10,8 +10,8 @@ const CONFIG = {
   MONGODB_CLUSTER_URL: process.env.MONGODB_CLUSTER_URL ?? "",
   JWT_SECRET: process.env.JWT_SECRET ?? "JEST_JWT_SECRET",
 
-  NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL ?? "",
-  NODEMAILER_IMAP_PASSWORD: process.env.NODEMAILER_IMAP_PASSWORD ?? "",
+  NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL ?? "jestemail@omisoft.net",
+  NODEMAILER_IMAP_PASSWORD: process.env.NODEMAILER_IMAP_PASSWORD ?? "JestEmailPassword",
 };
 
 export default CONFIG;

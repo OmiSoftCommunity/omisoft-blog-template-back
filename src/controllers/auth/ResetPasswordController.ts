@@ -4,7 +4,7 @@ import UserModel from "../../models/Users/UserModel";
 import { TEXT } from "../../utils/JoiErrors";
 import ResponseService from "../../utils/ResponseService";
 import validateFields, { JOI } from "../../utils/validation";
-import { mailer } from "../../config/NodeMailer";
+import { sendEmail } from "../../config/NodeMailer";
 
 const validationSchema = JOI.object({
   email: Joi.string().strict().email().required(),
@@ -21,7 +21,7 @@ const ResetPasswordController: RequestHandler = async (req, res) => {
       return ResponseService.error(res, TEXT.ERRORS.instructionsSentToEmail);
     }
 
-    sendEmail(email);
+    await sendResetPasswordEmail(email);
 
     res.status(201).end();
   } catch (error: any) {
@@ -29,8 +29,9 @@ const ResetPasswordController: RequestHandler = async (req, res) => {
   }
 };
 
-const sendEmail = (email: string) => {
-  const token = "";
+const sendResetPasswordEmail = async (email: string) => {
+  // TODO change to JWT
+  const token = "123456";
 
   const resetPasswordLink =
     process.env.NODE_ENV === "development"
@@ -42,7 +43,7 @@ const sendEmail = (email: string) => {
     subject: "Reset Password Link",
     text: `To change the password to a new one, go to the following link: ${resetPasswordLink}`,
   };
-  mailer(message);
+  await sendEmail(message);
 };
 
 export default ResetPasswordController;

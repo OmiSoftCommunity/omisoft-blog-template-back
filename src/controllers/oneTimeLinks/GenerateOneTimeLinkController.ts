@@ -2,7 +2,7 @@ import generator from "generate-password";
 import { RequestHandler } from "express";
 import OneTimeLinksModel from "../../models/OneTimeLinks/OneTimeLinkModel";
 import UserModel from "../../models/Users/UserModel";
-import { mailer } from "../../config/NodeMailer";
+import { sendEmail } from "../../config/NodeMailer";
 import ResponseService from "../../utils/ResponseService";
 import { TEXT } from "../../utils/JoiErrors";
 import validateFields, { JOI } from "../../utils/validation";
@@ -42,7 +42,7 @@ const GenerateOneTimeLinkController: RequestHandler<RequestData> = async (req, r
           ? `http://localhost:3000/reset-password/${token}`
           : `http://localhost:3000/reset-password/${token}`,
     };
-    mailer(message);
+    await sendEmail(message);
     ResponseService.success(res, message);
   } catch (err: any) {
     ResponseService.error(res, err.message);

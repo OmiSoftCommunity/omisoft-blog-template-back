@@ -4,6 +4,17 @@ import { connectMockDatabase, disconnectMockDatabase } from "../utils/MockMongoL
 import { registerWithEmail, resetPassword } from "../api/AuthApis";
 import { USER_EMAIL, USER_PASSWORD } from "../api/UserCredentials";
 
+const nodemailer = require("nodemailer"); // Don't work with imports
+
+jest.mock("nodemailer", () => {
+  const sendMailMock = jest.fn().mockResolvedValue("The Email was sent");
+  return {
+    createTransport: jest.fn(() => ({
+      sendMail: sendMailMock,
+    })),
+  };
+});
+
 /**
  * Reset Password Tests
  *
@@ -16,6 +27,10 @@ describe("Run Reset Password Tests", () => {
 
   beforeAll(async () => {
     mongoDadabase = await connectMockDatabase();
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   afterAll(async () => {
@@ -67,5 +82,22 @@ describe("Run Reset Password Tests", () => {
 
     expect(response.statusCode).toBe(400);
     expect(response.body.error).toBe("Further instructions have been sent to you by Email");
+  });
+
+  test("Reset Password Testing - Email sent successfully", async () => {
+    const response = await resetPassword({
+      email: USER_EMAIL,
+    });
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual({});
+
+    // Check Email data
+    expect(nodemailer.createTransport().sendMail).toHaveBeenCalled();
+    expect(nodemailer.createTransport().sendMail.mock.calls.length).toBe(1);
+
+    const mailArgs = nodemailer.createTransport().sendMail.mock.calls[0][0];
+    expect(mailArgs.to).toBe(USER_EMAIL);
+    expect(mailArgs.subject).toBe("Reset Password Link");
+    expect(mailArgs.text).toContain("To change the password to a new one, go to the following link:");
   });
 });

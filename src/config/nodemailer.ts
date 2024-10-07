@@ -18,12 +18,6 @@ const transporter = nodemailer.createTransport(
   { from: `OmiSoft <${CONFIG.NODEMAILER_EMAIL}>` }
 );
 
-export const mailer = (message: Object) => {
-  transporter.sendMail(message, (error: Error | null) => {
-    if (!error) {
-      console.log("Email sent successfully");
-    } else {
-      console.log("The email was not sent: " + error);
-    }
-  });
+export const sendEmail = async (message: Object) => {
+  return await transporter.sendMail(message);
 };
