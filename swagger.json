@@ -126,11 +126,38 @@
       }
     },
     "/auth/reset-password/": {
-      "put": {
+      "post": {
         "tags": ["Auth"],
-        "summary": "Reset user password",
+        "summary": "Reset User Password",
         "requestBody": {
-          "description": "Reset user password",
+          "description": "Reset User Password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/change-password/": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Change User Password",
+        "requestBody": {
+          "description": "Change User Password",
           "required": true,
           "content": {
             "application/json": {
@@ -657,9 +684,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "title, imageUrl, imageAlt, shortDescription, seoTitle, seoDesctiption, topic, tags"
-                ],
+                "required": ["title, imageUrl, imageAlt, shortDescription, seoTitle, seoDesctiption, topic, tags"],
                 "properties": {
                   "imageUrl": {
                     "type": "string"
